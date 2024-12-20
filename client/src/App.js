@@ -1,30 +1,24 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
 
+import Home from "./pages/Home";
+import Card from "./pages/Card";
+
 function App() {
-  const [loadData, setLoadData] = useState();
-
-  useEffect(() => {
-    axios
-      .get("/api/load")
-      .then((res) => {
-        console.log(res.data);
-        setLoadData(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
-
   return (
-    <div className="App" style={{ marginTop: "5rem" }}>
-      {loadData ? (
-        <div>
-          안녕하세요 {loadData.name}입니다. {loadData.age}살이에요.
-        </div>
-      ) : null}
-    </div>
+    <Router>
+      <div className="App">
+        <nav>
+          <Link to="/h">Home</Link>
+          <Link to="/c">Card</Link>
+        </nav>
+        <Routes>
+          <Route path="/h" element={<Home />} />
+          <Route path="/c" element={<Card />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
